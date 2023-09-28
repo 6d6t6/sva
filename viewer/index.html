@@ -3,22 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVA-VIEWER</title>
+    <title>Viewer</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+        .video-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        video {
+            width: 100%;
+            max-height: 500px;
+        }
+    </style>
 </head>
 <body>
     <h1>Viewer Page</h1>
-    <!-- Add your video element here -->
-    <video id="videoPlayer" controls></video>
-    <script src="script.js">
-      // Get the video element
-      const video = document.getElementById('videoPlayer');
-      
-      // Listen for messages from the host
-      window.addEventListener('message', (event) => {
-          // Handle messages and update video playback state here
-          // Example: event.data contains the synchronization data
-      });
+    <div class="video-container">
+        <video id="videoPlayer" controls></video>
+    </div>
+    <script>
+        // Get the video element
+        const video = document.getElementById('videoPlayer');
 
+        window.addEventListener('message', (event) => {
+            if (event.data.timestamp) {
+                // Update video playback based on synchronization data (timestamp)
+                video.currentTime = event.data.timestamp;
+            }
+        });
     </script>
 </body>
 </html>
