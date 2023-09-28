@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVA-VIEWER</title>
+</head>
+<body>
+    <h1>Viewer Page</h1>
+    <!-- Add your video element here -->
+    <video id="videoPlayer" controls></video>
+    <script src="script.js">
+      // Get the video element
+      const video = document.getElementById('videoPlayer');
+      
+      // Listen for messages from the host
+      window.addEventListener('message', (event) => {
+          // Handle messages and update video playback state here
+          // Example: event.data contains the synchronization data
+      });
+
+    </script>
+</body>
+</html>
