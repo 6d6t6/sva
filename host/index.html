@@ -3,22 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVA-HOST</title>
+    <title>Host</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+        .video-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        video {
+            width: 100%;
+            max-height: 500px;
+        }
+
+        .controls {
+            margin-top: 10px;
+        }
+
+        .material-icons {
+            font-size: 36px;
+            cursor: pointer;
+        }
+
+        .input-container {
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 300px;
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <h1>Host Page</h1>
-    <!-- Add your video element here -->
-    <video id="videoPlayer" controls></video>
+    <div class="video-container">
+        <video id="videoPlayer" controls></video>
+        <div class="controls">
+            <button id="playPauseButton" class="material-icons">play_arrow</button>
+        </div>
+    </div>
+    <div class="input-container">
+        <label for="videoUrl">Video URL:</label>
+        <input type="text" id="videoUrl" placeholder="Enter MP4 URL">
+        <button id="loadVideoButton">Load Video</button>
+    </div>
     <script>
-      // Get the video element
-      const video = document.getElementById('videoPlayer');
-      
-      // Set the video source (replace 'video.mp4' with your video file)
-      video.src = 'https://download.samplelib.com/mp4/sample-30s.mp4';
-      
-      // Play the video
-      video.play();
+        // Get the video element
+        const video = document.getElementById('videoPlayer');
+        const playPauseButton = document.getElementById('playPauseButton');
+        const videoUrlInput = document.getElementById('videoUrl');
+        const loadVideoButton = document.getElementById('loadVideoButton');
 
+        video.addEventListener('play', () => {
+            // Send synchronization data to viewers (e.g., current timestamp)
+            const timestamp = video.currentTime;
+            window.parent.postMessage({ timestamp }, '*');
+        });
+
+        playPauseButton.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+                playPauseButton.textContent = 'pause';
+            } else {
+                video.pause();
+                playPauseButton.textContent = 'play_arrow';
+            }
+        });
+
+        loadVideoButton.addEventListener('click', () => {
+            const videoUrl = videoUrlInput.value;
+            if (videoUrl) {
+                video.src = videoUrl;
+                video.load();
+                video.play();
+            }
+        });
     </script>
 </body>
 </html>
